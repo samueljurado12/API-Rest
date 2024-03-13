@@ -1,4 +1,3 @@
-import { StringLiteral } from "typescript";
 
 export interface Image {
     thumbnail_url: string;
@@ -43,11 +42,22 @@ export interface Availability {
 }
 
 export interface ReviewScores {
-
+    review_scores_accuracy: number;
+    review_scores_cleanliness: number;
+    review_scores_checkin: number;
+    review_scores_communication: number;
+    review_scores_location: number;
+    review_scores_value: number;
+    review_scores_rating: number;
 }
 
 export interface Review {
-
+    _id: string;
+    date: Date;
+    listing_id: string;
+    reviewew_id: string;
+    reviewer_name: string;
+    comments: string;
 }
 
 export interface House {
