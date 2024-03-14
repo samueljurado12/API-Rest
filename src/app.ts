@@ -17,5 +17,6 @@ app.use(logErrorRequestMiddleware)
 const port = envConstants.port
 
 app.listen(port, () => {
-    console.log(`Server running at port ${port}`)
+    if (envConstants.isMock) console.log("Running Mock API");
+    console.log(`Server running at port ${port}`);
 })
