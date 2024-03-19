@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { House, Review } from "..";
 import { getHouseContext } from "../house.context";
 import { HouseRepository } from "./house.repository";
@@ -11,7 +12,7 @@ export const houseDbRepository: HouseRepository = {
     getHouseListByCountry: async (country: string, page?: number, pageSize?: number): Promise<House[]> => {
         const skip = (page - 1) * pageSize;
         const limit = pageSize ?? 0
-        return getHouseContext().find({
+        return await getHouseContext().find({
             $or: [
                 { 'address.country': country },
                 { 'address.country_code': country }
@@ -19,10 +20,21 @@ export const houseDbRepository: HouseRepository = {
         })
             .skip(skip).limit(limit).toArray();
     },
-    getHouse: function (id: string): Promise<House> {
-        return getHouseContext().findOne({ _id: id })
-    },
-    reviewHouse: function (id: string, review: Review): Promise<Review> {
-        throw new Error("Function not implemented.");
+    getHouse: async (id: string): Promise<House> => await getHouseContext().findOne({ _id: id }),
+    reviewHouse: async (id: string, review: Review): Promise<Review> => {
+        review = { ...review, _id: new ObjectId().toHexString(), date: new Date(), listing_id: id };
+        const house = await getHouseContext().findOne({ _id: id });
+        house.reviews.push(review);
+        await getHouseContext().findOneAndUpdate(
+            {
+                _id: house._id
+            },
+            {
+                $set: house
+            },
+            { upsert: true, returnDocument: 'after' }
+        );
+        return review
+
     }
 }
