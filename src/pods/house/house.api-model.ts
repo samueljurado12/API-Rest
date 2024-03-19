@@ -1,16 +1,19 @@
 
 export interface HouseHome {
+    id: string;
     name: string;
     image_url: string;
 }
 
 export interface Review {
+    id: string;
     author_name: string;
-    date: Date;
+    date: string;
     comments: string;
 }
 
 export interface HouseDetail {
+    id: string;
     name: string;
     image_url: string;
     description: string;

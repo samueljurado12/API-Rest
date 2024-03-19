@@ -1,5 +1,6 @@
 import { houseRepository } from "dals/house";
 import { Router } from "express";
+import { mapHouseFromModelToApiDetail, mapHouseListFromModelToApiHome, mapReviewFromApiToModel, mapReviewFromModelToApi } from "./house.mapper";
 
 export const houseApi = Router()
 
@@ -8,10 +9,10 @@ houseApi
         try {
             const page = Number(req.query.page);
             const pageSize = Number(req.query.pageSize);
-            const country = String(req.query.country);
+            const country = String(req.query.country ?? '');
             const houseList = country ? await houseRepository.getHouseListByCountry(country, page, pageSize) :
                 await houseRepository.getHouseList(page, pageSize);
-            res.send(houseList)
+            res.send(mapHouseListFromModelToApiHome(houseList))
         }
         catch (error) {
             next(error);
@@ -21,7 +22,7 @@ houseApi
         try {
             const id = req.params.id;
             const house = await houseRepository.getHouse(id);
-            res.send(house)
+            res.send(mapHouseFromModelToApiDetail(house))
         }
         catch (error) {
             next(error);
@@ -29,7 +30,10 @@ houseApi
     })
     .post("/:id/review", async (req, res, next) => {
         try {
-            res.sendStatus(204)
+            const houseId = req.params.id;
+            const review = mapReviewFromApiToModel(req.body);
+            const newReview = await houseRepository.reviewHouse(houseId, review)
+            res.send(mapReviewFromModelToApi(newReview));
         }
         catch (error) {
             next(error);
