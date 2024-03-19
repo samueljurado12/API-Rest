@@ -1,4 +1,4 @@
-import { createRestApiServer } from "core/servers"
+import { createRestApiServer, connectToDBServer } from "core/servers"
 import { logRequestMiddleware, logErrorRequestMiddleware } from "common/middlewares"
 import { envConstants } from "core/constants"
 import { houseApi } from "pods/house"
@@ -16,7 +16,13 @@ app.use(logErrorRequestMiddleware)
 
 const port = envConstants.port
 
-app.listen(port, () => {
-    if (envConstants.isMock) console.log("Running Mock API");
+app.listen(port, async () => {
+    if (envConstants.isMock) {
+        console.log("Running Mock API");
+    } else {
+        await connectToDBServer(envConstants.mongoDbURI);
+        console.log('Connected to DB');
+
+    }
     console.log(`Server running at port ${port}`);
 })

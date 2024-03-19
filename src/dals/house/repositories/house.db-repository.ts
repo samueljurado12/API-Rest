@@ -1,15 +1,26 @@
 import { House, Review } from "..";
+import { getHouseContext } from "../house.context";
 import { HouseRepository } from "./house.repository";
 
 export const houseDbRepository: HouseRepository = {
-    getHouseList: function (page?: number, pageSize?: number): Promise<House[]> {
-        throw new Error("Function not implemented.");
+    getHouseList: async (page?: number, pageSize?: number): Promise<House[]> => {
+        const skip = (page - 1) * pageSize;
+        const limit = pageSize ?? 0
+        return getHouseContext().find().skip(skip).limit(limit).toArray();
     },
-    getHouseListByCountry: function (country: string, page?: number, pageSize?: number): Promise<House[]> {
-        throw new Error("Function not implemented.");
+    getHouseListByCountry: async (country: string, page?: number, pageSize?: number): Promise<House[]> => {
+        const skip = (page - 1) * pageSize;
+        const limit = pageSize ?? 0
+        return getHouseContext().find({
+            $or: [
+                { 'address.country': country },
+                { 'address.country_code': country }
+            ]
+        })
+            .skip(skip).limit(limit).toArray();
     },
     getHouse: function (id: string): Promise<House> {
-        throw new Error("Function not implemented.");
+        return getHouseContext().findOne({ _id: id })
     },
     reviewHouse: function (id: string, review: Review): Promise<Review> {
         throw new Error("Function not implemented.");

@@ -8,7 +8,7 @@ export interface DB {
 export const db: DB = {
     houses: [
         {
-            _id: new ObjectId(),
+            _id: '10009999',
             listing_url: "https://www.airbnb.com/rooms/10009999",
             name: "Horto flat with small garden",
             summary: "One bedroom + sofa-bed in quiet and bucolic neighbourhood right next to the Botanical Garden. Small garden, outside shower, well equipped kitchen and bathroom with shower and tub. Easy for transport with many restaurants and basic facilities in the area.",
@@ -63,7 +63,7 @@ export const db: DB = {
                 xl_picture_url: ""
             },
             host: {
-                host_id: new ObjectId(),
+                host_id: '1282196',
                 host_url: "https://www.airbnb.com/users/show/1282196",
                 host_name: "Ynaie",
                 host_location: "Rio de Janeiro, State of Rio de Janeiro, Brazil",
@@ -100,7 +100,7 @@ export const db: DB = {
             reviews: []
         },
         {
-            _id: new ObjectId(),
+            _id: '1001265',
             listing_url: "https://www.airbnb.com/rooms/1001265",
             name: "Ocean View Waikiki Marina w/prkg",
             summary: "A short distance from Honolulu's billion dollar mall, and the same distance to Waikiki. Parking included. A great location that work perfectly for business, education, or simple visit. Experience Yacht Harbor views and 5 Star Hilton Hawaiian Village.",
@@ -178,7 +178,7 @@ export const db: DB = {
                 xl_picture_url: ""
             },
             host: {
-                host_id: new ObjectId(),
+                host_id: '5448114',
                 host_url: "https://www.airbnb.com/users/show/5448114",
                 host_name: "David",
                 host_location: "Honolulu, Hawaii, United States",
@@ -225,19 +225,19 @@ export const db: DB = {
             },
             reviews: [
                 {
-                    _id: new ObjectId(),
+                    _id: '13165166545614',
                     date: new Date("2013-05-24T04:00:00.000Z")
                     ,
-                    listing_id: new ObjectId(),
-                    reviewer_id: new ObjectId(),
+                    listing_id: '5448114',
+                    reviewer_id: '456189156156',
                     reviewer_name: "Jacqui",
                     comments: "Our stay was excellent.  The place had a breath taking view.  David was very accommodating with our hotel stay, parking availability and all of our concerns & questions.  He did above and beyond what anyone would want.  He's a man of his word and very professional.  We highly recommend for everyone to stay in all of the places he recommended.  Thank you David for a accommodating our wonderful and memorable stay in Honolulu, Hawaii.  God Bless!  Henry & Jacqui (SF, CA)"
                 },
                 {
-                    _id: new ObjectId(),
+                    _id: '8989456165',
                     date: new Date("2013-06-01T04:00:00.000Z"),
-                    listing_id: new ObjectId(),
-                    reviewer_id: new ObjectId(),
+                    listing_id: '5448114',
+                    reviewer_id: '12345',
                     reviewer_name: "Khoren",
                     comments: "Tell others in the Airbnb community about your stay."
                 }

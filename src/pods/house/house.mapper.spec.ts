@@ -1,7 +1,6 @@
 import * as model from 'dals'
 import * as apiModel from './house.api-model'
 import { mapHouseFromModelToApiDetail, mapHouseListFromModelToApiHome } from './house.mapper'
-import { ObjectId } from 'mongodb';
 
 describe('pods/house/house.mapper spec', () => {
     describe('mapHouseListFromModelToApiHome', () => {
@@ -14,7 +13,7 @@ describe('pods/house/house.mapper spec', () => {
         it('should return one mapped item in array when it feeds houseList with one item', () => {
             const houseList: model.House[] = [
                 {
-                    _id: new ObjectId('60c20a334bec6a37b08acec9'),
+                    _id: '60c20a334bec6a37b08acec9',
                     name: 'test house',
                     images: {
                         thumbnail_url: "test/url"
@@ -43,7 +42,7 @@ describe('pods/house/house.mapper spec', () => {
         it('should return mapped item when it feeds one house', () => {
             const house: model.House =
             {
-                _id: new ObjectId('60c20a334bec6a37b08acec9'),
+                _id: '60c20a334bec6a37b08acec9',
                 name: 'test house',
                 images: {
                     thumbnail_url: "test/url"

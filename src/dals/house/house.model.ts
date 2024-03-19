@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 
 export interface Image {
     thumbnail_url?: string;
@@ -8,7 +7,7 @@ export interface Image {
 }
 
 export interface Host {
-    host_id?: ObjectId;
+    host_id?: string;
     host_url?: string;
     host_name?: string;
     host_location?: string;
@@ -53,16 +52,16 @@ export interface ReviewScores {
 }
 
 export interface Review {
-    _id?: ObjectId;
+    _id?: string;
     date?: Date;
-    listing_id?: ObjectId;
-    reviewer_id?: ObjectId;
+    listing_id?: string;
+    reviewer_id?: string;
     reviewer_name?: string;
     comments?: string;
 }
 
 export interface House {
-    _id?: ObjectId;
+    _id?: string;
     listing_url?: string;
     name?: string;
     summary?: string;

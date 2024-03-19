@@ -17,10 +17,10 @@ export const houseMockRepository: HouseRepository = {
     getHouseList: async (page?: number, pageSize?: number, country?: string): Promise<House[]> => paginatedResult(db.houses, page, pageSize),
     getHouseListByCountry: async (country: string, page?: number, pageSize?: number): Promise<House[]> =>
         paginatedResult(db.houses.filter(h => h.address.country === country || h.address.country_code === country), page, pageSize),
-    getHouse: async (id: string): Promise<House> => db.houses.find(h => h._id.toHexString() === id),
+    getHouse: async (id: string): Promise<House> => db.houses.find(h => h._id === id),
     reviewHouse: async (id: string, review: Review): Promise<Review> => {
-        review = { ...review, _id: new ObjectId(), date: new Date(), listing_id: new ObjectId(id) }
-        db.houses.find(h => h._id.toHexString() === id).reviews.push(review)
+        review = { ...review, _id: new ObjectId().toHexString(), date: new Date(), listing_id: id }
+        db.houses.find(h => h._id === id).reviews.push(review)
         return review;
     }
 }
