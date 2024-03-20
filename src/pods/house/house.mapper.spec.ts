@@ -23,7 +23,7 @@ describe('pods/house/house.mapper spec', () => {
 
             const result = mapHouseListFromModelToApiHome(houseList);
 
-            const expectedResult: apiModel.HouseHome[] = [
+            const expectedResult: Pick<apiModel.House, "id" | "name" | "image_url">[] = [
                 {
                     id: '60c20a334bec6a37b08acec9',
                     name: 'test house',
@@ -45,7 +45,7 @@ describe('pods/house/house.mapper spec', () => {
                 _id: '60c20a334bec6a37b08acec9',
                 name: 'test house',
                 images: {
-                    thumbnail_url: "test/url"
+                    medium_url: "test/url"
                 },
                 description: 'test description',
                 address: {
@@ -60,7 +60,7 @@ describe('pods/house/house.mapper spec', () => {
 
             const result = mapHouseFromModelToApiDetail(house);
 
-            const expectedResult: apiModel.HouseDetail =
+            const expectedResult: apiModel.House =
             {
                 id: '60c20a334bec6a37b08acec9',
                 name: 'test house',

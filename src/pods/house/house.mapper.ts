@@ -1,17 +1,17 @@
 import * as model from 'dals/house'
 import * as apiModel from './house.api-model'
 
-const getAddressStringified = (address: model.Address): string => `${address?.suburb}, ${address?.street}`
+const getAddressStringified = (address: model.Address): string => address ? `${address?.suburb}, ${address?.street}` : null
 
-const mapHouseFromModelToApiHome = (house: model.House): apiModel.HouseHome => ({
+const mapHouseFromModelToApiHome = (house: model.House): Pick<apiModel.House, "id" | "name" | "image_url"> => ({
     id: house._id,
     name: house.name,
     image_url: [house.images?.thumbnail_url, house.images?.medium_url, house.images?.picture_url, house.images?.xl_picture_url].find(i => i)
 });
 
-export const mapHouseListFromModelToApiHome = (houses: model.House[]): apiModel.HouseHome[] => houses?.map(h => mapHouseFromModelToApiHome(h)) ?? [];
+export const mapHouseListFromModelToApiHome = (houses: model.House[]): Pick<apiModel.House, "id" | "name" | "image_url">[] => houses?.map(h => mapHouseFromModelToApiHome(h)) ?? [];
 
-export const mapHouseFromModelToApiDetail = (house: model.House): apiModel.HouseDetail => ({
+export const mapHouseFromModelToApiDetail = (house: model.House): apiModel.House => ({
     id: house?._id,
     image_url: [house?.images?.xl_picture_url, house?.images?.picture_url, house?.images?.medium_url, house?.images?.thumbnail_url].find(i => i),
     name: house?.name,

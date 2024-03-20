@@ -1,10 +1,4 @@
 
-export interface HouseHome {
-    id: string;
-    name: string;
-    image_url: string;
-}
-
 export interface Review {
     id: string;
     author_name: string;
@@ -12,7 +6,7 @@ export interface Review {
     comments: string;
 }
 
-export interface HouseDetail {
+export interface House {
     id: string;
     name: string;
     image_url: string;
