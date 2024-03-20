@@ -1,6 +1,6 @@
 import * as model from 'dals'
 import * as apiModel from './house.api-model'
-import { mapHouseFromModelToApiDetail, mapHouseListFromModelToApiHome } from './house.mapper'
+import { mapHouseFromModelToApiDetail, mapHouseListFromModelToApiHome, mapReviewFromApiToModel, mapReviewFromModelToApi } from './house.mapper'
 
 describe('pods/house/house.mapper spec', () => {
     describe('mapHouseListFromModelToApiHome', () => {
@@ -75,7 +75,62 @@ describe('pods/house/house.mapper spec', () => {
 
             expect(result).toEqual(expectedResult)
         });
-
     })
+
+    describe('mapReviewFromModelToApi', () => {
+
+        it('should return mapped item when it feeds one review', () => {
+
+            const date = new Date();
+            const review: model.Review =
+            {
+                _id: '60c20a334bec6a37b08acec9',
+                reviewer_name: "test name",
+                comments: "Test comments. 10/10.",
+                date: date,
+                listing_id: "1",
+                reviewer_id: "1"
+            };
+
+            const result = mapReviewFromModelToApi(review);
+
+            const expectedResult: apiModel.Review =
+            {
+                id: '60c20a334bec6a37b08acec9',
+                author_name: "test name",
+                comments: "Test comments. 10/10.",
+                date: date.toISOString(),
+            };
+
+            expect(result).toEqual(expectedResult)
+        });
+
+    });
+
+    describe('mapReviewFromApiToModel', () => {
+
+        it('should return mapped item when it feeds one review', () => {
+
+            const date = new Date();
+            const review: apiModel.Review =
+            {
+                author_name: "test name",
+                comments: "Test comments. 10/10.",
+                id: null,
+                date: null
+            };
+
+            const result = mapReviewFromApiToModel(review);
+
+            const expectedResult: model.Review =
+            {
+                reviewer_name: "test name",
+                comments: "Test comments. 10/10.",
+            };
+
+            expect(result).toEqual(expectedResult)
+        });
+
+    });
 
 })
