@@ -1,5 +1,5 @@
 
-export interface Image {
+export interface DbImage {
     thumbnail_url?: string;
     medium_url?: string;
     picture_url?: string;
@@ -96,7 +96,7 @@ export interface House {
     cleaning_fee?: number;
     extra_people?: number;
     guests_included?: number;
-    images?: Image;
+    images?: DbImage;
     host?: Host;
     address?: Address;
     availability?: Availability;

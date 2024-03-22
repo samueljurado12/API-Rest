@@ -1,9 +1,9 @@
 import { generateSalt, hashPassword } from "common/helpers"
 import { db } from "dals/mock-data"
-import { getUserContext } from "dals/user/user.context";
+import { userContext } from "dals/user/user.context";
 import { promisify } from "util";
 import childProcess from "child_process";
-import { connectToDBServer, disconnectFromDBServer } from "core/servers";
+import { connectToDBServer } from "core/servers";
 import { envConstants } from "core/constants";
 
 
@@ -29,14 +29,12 @@ export const restoreDataFromBackup = async (backupPath: string) => {
     for (const user of db.users) {
         const salt = await generateSalt();
         const password = await hashPassword(user.password, salt);
-        await getUserContext().insertOne({
+        await userContext.create({
             ...user,
             password,
             salt
         });
     }
-
-    await disconnectFromDBServer();
 }
 
 restoreDataFromBackup("../../backup"); 3

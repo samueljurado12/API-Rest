@@ -1,14 +1,6 @@
 import { MongoClient, Db } from 'mongodb';
+import mongoose from 'mongoose';
 
-export let db: Db;
-let client: MongoClient;
 export const connectToDBServer = async (connectionURI: string) => {
-    client = new MongoClient(connectionURI);
-    await client.connect();
-
-    db = client.db();
-};
-
-export const disconnectFromDBServer = async () => {
-    await client.close();
+    await mongoose.connect(connectionURI)
 };

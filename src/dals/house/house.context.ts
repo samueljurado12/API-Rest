@@ -1,5 +1,6 @@
-import { db } from "core/servers";
-import { House } from "./house.model";
+import { model } from "mongoose";
+import { House as ListingsAndReview } from "./house.model";
+import { houseSchema } from "./house.schema";
 
-export const getHouseContext = () =>
-    db?.collection<House>('listingsAndReviews')
+
+export const houseContext = model<ListingsAndReview>('listingsAndReviews', houseSchema, 'listingsAndReviews')
