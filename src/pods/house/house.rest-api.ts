@@ -1,4 +1,4 @@
-import { houseRepository } from "dals/house";
+import { Review, houseRepository } from "dals/house";
 import { Router } from "express";
 import { mapHouseFromModelToApiDetail, mapHouseListFromModelToApiHome, mapReviewFromApiToModel, mapReviewFromModelToApi } from "./house.mapper";
 
@@ -31,7 +31,12 @@ houseApi
     .post("/:id/review", async (req, res, next) => {
         try {
             const houseId = req.params.id;
-            const review = mapReviewFromApiToModel(req.body);
+            const review: Review = {
+                ...mapReviewFromApiToModel(req.body),
+                date: new Date(),
+                listing_id: houseId,
+                reviewer_id: req.userSession.id
+            }
             const newReview = await houseRepository.reviewHouse(houseId, review)
             res.send(mapReviewFromModelToApi(newReview));
         }

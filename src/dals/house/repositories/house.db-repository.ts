@@ -22,7 +22,7 @@ export const houseDbRepository: HouseRepository = {
     },
     getHouse: async (id: string): Promise<House> => await getHouseContext().findOne({ _id: id }),
     reviewHouse: async (id: string, review: Review): Promise<Review> => {
-        review = { ...review, _id: new ObjectId().toHexString(), date: new Date(), listing_id: id };
+        review = { ...review, _id: new ObjectId().toHexString() };
         const house = await getHouseContext().findOne({ _id: id });
         house.reviews.push(review);
         await getHouseContext().findOneAndUpdate(
