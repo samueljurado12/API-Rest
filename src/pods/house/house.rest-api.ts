@@ -1,6 +1,7 @@
 import { Review, houseRepository } from "dals/house";
 import { Router } from "express";
-import { mapHouseFromModelToApiDetail, mapHouseListFromModelToApiHome, mapReviewFromApiToModel, mapReviewFromModelToApi } from "./house.mapper";
+import { mapHouseFromApiToModel, mapHouseFromModelToApiDetail, mapHouseListFromModelToApiHome, mapReviewFromApiToModel, mapReviewFromModelToApi } from "./house.mapper";
+import { authorizationMiddleware } from "pods/security/security.middlewares";
 
 export const houseApi = Router()
 
@@ -41,6 +42,20 @@ houseApi
             res.send(mapReviewFromModelToApi(newReview));
         }
         catch (error) {
+            next(error);
+        }
+    })
+    .put("/:id", authorizationMiddleware(["admin"]), async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            if (await houseRepository.getHouse(id)) {
+                const house = mapHouseFromApiToModel({ ...req.body, id });
+                await houseRepository.updateHouse(house);
+                res.sendStatus(204);
+            } else {
+                res.sendStatus(404);
+            }
+        } catch (error) {
             next(error);
         }
     })

@@ -21,7 +21,7 @@ export const db: DB = {
             email: "admin@email.com",
             password: "test",
             salt: "",
-            role: "standard"
+            role: "admin"
         }
     ],
     houses: [

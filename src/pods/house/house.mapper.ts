@@ -3,6 +3,15 @@ import * as apiModel from './house.api-model'
 
 const getAddressStringified = (address: model.Address): string => address ? `${address?.suburb}, ${address?.street}` : null
 
+const getAddressFromString = (address: string): model.Address => {
+    if (!address) return undefined;
+    const [suburb, street] = address.split(",");
+    return {
+        suburb,
+        street
+    }
+}
+
 const mapHouseFromModelToApiHome = (house: model.House): Pick<apiModel.House, "id" | "name" | "image_url"> => ({
     id: house._id,
     name: house.name,
@@ -21,6 +30,22 @@ export const mapHouseFromModelToApiDetail = (house: model.House): apiModel.House
     description: house?.description,
     address: getAddressStringified(house?.address),
     latest_reviews: house?.reviews.sort((h1, h2) => - h1.date?.getTime() + h2.date?.getTime()).slice(0, 5).map(r => mapReviewFromModelToApi(r))
+})
+
+export const mapHouseFromApiToModel = (house: apiModel.House): model.House => ({
+    _id: house.id,
+    name: house.name,
+    images: {
+        xl_picture_url: house.image_url,
+        medium_url: house.image_url,
+        picture_url: house.image_url,
+        thumbnail_url: house.image_url
+    },
+    description: house.description,
+    bedrooms: house.bedrooms,
+    beds: house.beds,
+    bathrooms: house.bathroom,
+    address: getAddressFromString(house.address)
 })
 
 export const mapReviewFromModelToApi = (review: model.Review): apiModel.Review => ({

@@ -6,12 +6,12 @@ import { HouseRepository } from "./house.repository";
 export const houseDbRepository: HouseRepository = {
     getHouseList: async (page?: number, pageSize?: number): Promise<House[]> => {
         const skip = (page - 1) * pageSize;
-        const limit = pageSize ?? 0
+        const limit = pageSize ?? 0;
         return getHouseContext().find().skip(skip).limit(limit).toArray();
     },
     getHouseListByCountry: async (country: string, page?: number, pageSize?: number): Promise<House[]> => {
         const skip = (page - 1) * pageSize;
-        const limit = pageSize ?? 0
+        const limit = pageSize ?? 0;
         return await getHouseContext().find({
             $or: [
                 { 'address.country': country },
@@ -34,7 +34,19 @@ export const houseDbRepository: HouseRepository = {
             },
             { upsert: true, returnDocument: 'after' }
         );
-        return review
+        return review;
 
+    },
+    updateHouse: async (house: House): Promise<House> => {
+        const updatedHouse = await getHouseContext().findOneAndUpdate(
+            {
+                _id: house._id,
+            },
+            {
+                $set: house,
+            },
+            { upsert: true, ignoreUndefined: true, returnDocument: 'after' }
+        );
+        return updatedHouse;
     }
 }

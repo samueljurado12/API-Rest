@@ -5,4 +5,5 @@ export interface HouseRepository {
     getHouseListByCountry: (country: string, page?: number, pageSize?: number) => Promise<House[]>;
     getHouse: (id: string) => Promise<House>;
     reviewHouse: (id: string, review: Review) => Promise<Review>;
+    updateHouse: (house: House) => Promise<House>;
 }
