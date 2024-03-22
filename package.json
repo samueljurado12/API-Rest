@@ -2,7 +2,6 @@
   "name": "api-rest",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
   "nodemonConfig": {
     "ignore": [
       "**/*.test.ts",
@@ -13,7 +12,7 @@
     "watch": [
       "src"
     ],
-    "exec": "node -r tsconfig-paths/register -r ts-node/register ./src/index.ts",
+    "exec": "node -r tsconfig-paths/register -r ts-node/register --",
     "ext": "ts, js"
   },
   "scripts": {
@@ -23,7 +22,9 @@
     "test:watch": "npm test -- --watchAll -i",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
-    "start:db": "docker compose up -d"
+    "start:db": "docker compose up -d",
+    "start:console-runners": "run-p -l type-check:watch console-runners start:db",
+    "console-runners": "nodemon --no-stdin ./src/console-runners/index.ts"
   },
   "keywords": [],
   "author": "Samuel Jurado",
